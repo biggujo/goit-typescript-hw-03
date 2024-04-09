@@ -23,12 +23,12 @@ class Person {
 }
 
 abstract class House {
-    private tenants: Array<Person>;
-    private door: boolean;
-    private readonly key: Key;
+    public tenants: Array<Person>;
+    door: boolean;
+    protected readonly key: Key;
 
 
-    protected constructor(key: Key) {
+    public constructor(key: Key) {
         this.tenants = [];
         this.door = false;
         this.key = key;
@@ -43,24 +43,12 @@ abstract class House {
     }
 
     public abstract openDoor(key: Key): boolean;
-
-    public setDoor = (door: boolean): void => {
-        this.door = door;
-    }
-
-    public getKey = (): Key => {
-        return this.key;
-    };
 }
 
 class MyHouse extends House {
-    constructor(key: Key) {
-        super(key);
-    }
-
     public openDoor(key: Key): boolean {
-        if (this.getKey() === key) {
-            this.setDoor(true);
+        if (this.key.getSignature() === key.getSignature()) {
+            this.door = true;
             return true;
         }
 
